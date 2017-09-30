@@ -10,7 +10,7 @@
   </head>
   <body>
   <div class="jumbotron">
-	<h1> CHUNK it! </h1>
+	<h1> CHUNK Machine! </h1>
   </div>
 	<div class="container">
 		<div class="row">
