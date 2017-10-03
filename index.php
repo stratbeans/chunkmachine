@@ -11,14 +11,15 @@
   </head>
   <body>
 <!-- Global Site Tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107387074-1"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-107367939-1"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments)};
   gtag('js', new Date());
 
-  gtag('config', 'UA-107387074-1');
+  gtag('config', 'UA-107367939-1');
 </script>
+
   <div class="jumbotron">
 	<h1> CHUNK Machine! </h1>
   </div>
