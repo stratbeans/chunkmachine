@@ -27,6 +27,7 @@
 		<div class="row">
 			<div class="col-md-12">
 				<div class="form-group">
+					<div id='display'></div>
 					<label for="exampleTextarea"><strong>Dump your list below</strong></label>
 					<input type="text" id="idFilter" placeholder="Filter By ..." class="pull-right">
 					<textarea class="form-control" id="idList" rows="3"></textarea>
@@ -46,6 +47,8 @@
 					  <strong>Press Button Above</strong>
 				</div>	
 			</div>	
+			<div class="col-md-12" style="margin-top:6px; background-color:gray" id="selectedDisplay">
+			</div>	
 		</div>
 
 	</div> <!-- container -->
@@ -60,6 +63,7 @@
 		var currentIndex = 0;
 		var clickMode = '';
 
+		var clickCount = 0;
 		function isLineGood(line)
 		{
 			var re = /\w/;
@@ -86,10 +90,12 @@
 			lineArray = [];
 			numberOfGoodLines = 0;
 			currentIndex = 0;
+			clickCount = 0;
 			// go ahead and break the items line wise
 			tempLineArray = $('#idList').val().split("\n");
 
 			var size = tempLineArray.length;
+			// Pass 1 : Just calculate good lines
 			for (i = 0; i < size; i++) {
 				var item = tempLineArray[i];
 				if (!isLineGood(item)) {
@@ -98,8 +104,9 @@
 				numberOfGoodLines++;
 
 				var originalLineNumber = i + 1;
-				lineArray.push(originalLineNumber + ') ' + item);
+				lineArray.push(originalLineNumber + '/' + size + ') ' + item);
 			}
+			//$('#selectedDisplay').html("");
 		}
 
 		function buttonRandomClicked()
@@ -109,8 +116,10 @@
 			}
 			clickMode = 'R';
 
+			clickCount++;
 			var size = lineArray.length;
 			if (size == 0) {
+				clickCount = 0;
 				if (numberOfGoodLines == 0) {
 					return;
 				}
@@ -126,6 +135,7 @@
 			currentIndex = r; 
 
 			$('#idDisplay').html(lineArray[r]);
+			$('#display').html(clickCount + '/' + numberOfGoodLines);
 
 			lineArray.splice(r, 1);
 		}
@@ -139,12 +149,14 @@
 			}
 			clickMode = 'S'; // random
 
+			clickCount++;
 			$('#idDisplay').html(lineArray[currentIndex]);
 			currentIndex++;
 
 			if (currentIndex == lineArray.length) {
 				currentIndex = 0;
 			}
+			$('#display').html(clickCount + '/' + numberOfGoodLines);
 		}
 
 		function buttonResetClicked()
@@ -155,6 +167,15 @@
 			currentIndex = 0;
 			clickMode = '';
 			$('#idDisplay').html("<strong>Lets start again ...</strong>");
+			$('#display').html("");
+			$('#selectedDisplay').html("");
+		}
+
+		function buttonDisplayClicked()
+		{
+			var displayText = $('#idDisplay').text();
+			var oldText =  $('#selectedDisplay').html();
+			$('#selectedDisplay').html(oldText + '<br>' + displayText);
 		}
 
 		$(document).ready(function() {
@@ -162,6 +183,7 @@
 			$('#btnRandom').on('click', buttonRandomClicked);
 			$('#btnSerial').on('click', buttonSerialClicked);
 			$('#btnReset').on('click', buttonResetClicked);
+			$('#idDisplay').on('click', buttonDisplayClicked);
 		}); 
 	</script>
 
